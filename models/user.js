@@ -1,8 +1,5 @@
 import mongoose from "mongoose";
 
-
-
-
 const userSchema = new mongoose.Schema(
   {
     googleId: {
@@ -42,6 +39,7 @@ const userSchema = new mongoose.Schema(
       type: String,
       required: true,
       enum: ["Local", "Google"],
+      default: "Local",
     },
     admin: {
       type: Boolean,

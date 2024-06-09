@@ -56,6 +56,9 @@ app.use(passport.initialize());
 app.use(corsAll);
 
 // routes
+app.get("/", (req, res) => {
+  res.send("Welcome to the server");
+});
 app.use("/auth", authRouter);
 // app.use('/user',userRouter);
 
