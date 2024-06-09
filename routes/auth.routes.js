@@ -1,22 +1,26 @@
+import authService from "../services/auth.service.js";
 import { Router } from "express";
+
 const router = Router();
-import Controller from "../controllers/authController.js";
-import {corsAll,corsWithOptions} from '../utils/cors.js';
-import { loginValidators, refreshTokenValidators, signupValidators, validate } from '../middleware/validator.js';
 
+router.post("/signup", async (req, res, next) => {
+  try {
+    let response = await authService.signup(req.body);
+    return res.status(200).json({ success: true, data: response });
+  } catch (err) {
+    console.log(err);
+    return next(err);
+  }
+});
 
-
-//local auth login
-router.post("/login",corsAll, loginValidators(),validate, Controller.Login);
-
-//local auth signup
-router.post("/signup",corsAll, signupValidators(), validate, Controller.SignUp);
-
-
-//Refresh Access Token
-router.post('/RefreshAccessToken',corsAll,refreshTokenValidators(),validate, Controller.RefreshAccessToken);
-
-
-
+router.post("/login", async (req, res, next) => {
+  try {
+    const response = await authService.login(req.body);
+    return res.status(200).json({ success: true, data: response });
+  } catch (err) {
+    console.log(err);
+    return next(err);
+  }
+});
 
 export default router;
